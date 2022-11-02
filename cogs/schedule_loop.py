@@ -21,7 +21,7 @@ class Schedule_loopCog(commands.Cog):
         self.schedule_loop.start()
           
     #✿Adding new loop✿
-    @tasks.loop(time=datetime.time(hour=15, minute=58))
+    @tasks.loop(time=datetime.time(hour=22))
     async def schedule_loop(self):
         #✿Linking to Google API✿
         creds = None
