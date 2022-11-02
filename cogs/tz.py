@@ -1,9 +1,11 @@
 from discord.ext import commands, tasks
-from discord import app_commands
+from discord import app_commands, utils
 import asyncio
 import datetime
+from datetime import timedelta
 from dateutil import tz
 from time import sleep
+import pandas as pd
 
 class ClockCog(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
@@ -33,7 +35,9 @@ class ClockCog(commands.Cog):
        
     @clock_loop.before_loop
     async def tasks_before_loop(self):
-        await self.bot.wait_until_ready() 
+        await self.bot.wait_until_ready()
+        a = datetime.datetime.min + round((datetime.datetime.now()-datetime.datetime.min)/timedelta(minutes=15))*timedelta(minutes=15)
+        await utils.sleep_until(a)
 
 async def setup(bot: commands.Bot) -> None:
     await bot.add_cog(ClockCog(bot))
