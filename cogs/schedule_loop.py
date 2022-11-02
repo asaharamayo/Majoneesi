@@ -21,7 +21,7 @@ class Schedule_loopCog(commands.Cog):
         self.schedule_loop.start()
           
     #✿Adding new loop✿
-    @tasks.loop(time=datetime.time(hour=22))
+    @tasks.loop(time=datetime.time(hour=15, minute=58))
     async def schedule_loop(self):
         #✿Linking to Google API✿
         creds = None
@@ -48,6 +48,7 @@ class Schedule_loopCog(commands.Cog):
             channel_id = 1031608452084146207
             unix_tz = 28800
             message_id = 1037070041553850440
+            update_message_id = 1037388486191349830
         #✿---✿---✿---✿---✿---✿---✿
 
             if not events:
@@ -73,7 +74,7 @@ class Schedule_loopCog(commands.Cog):
             x.align = "c"
             
         #✿Set up embed✿ 
-            embed = discord.Embed(title='Mayo',description='What mayo doing?',color=0xfedbff,timestamp=datetime.now())
+            embed = discord.Embed(title='Mayo',description='What mayo doing?',color=0xfedbff,timestamp=datetime.datetime.now())
             embed.set_image(url="https://files.yande.re/jpeg/0ff5f6d4f8afe0d0deddbf17c2b58aa6/yande.re%201033861%20cleavage%20halloween%20kano_hito%20pointy_ears%20thighhighs%20wings.jpg")
             embed.add_field(name='₊˚ ✧ ‿︵‿୨୧‿︵ ✧ List ✧ ︵‿୨୧‿︵‿ ✧ ₊˚',value=my_list, inline=False)
             embed.add_field(name='₊˚ ✧ ︵‿୨୧‿︵ ✧ Schedule ✧ ︵‿୨୧‿︵ ✧ ₊˚',value='```\n'+str(x)+'```')
@@ -83,6 +84,11 @@ class Schedule_loopCog(commands.Cog):
             channel = self.bot.get_channel(channel_id)
             message = await channel.fetch_message(message_id)
             await message.edit(embed=embed)
+
+        #✿Set up last update message✿
+            converted_now = time.mktime(datetime.datetime.now().timetuple())
+            update_message = await channel.fetch_message(update_message_id)
+            await update_message.edit(content=' ♡ Last auto-updated <t:' + str(int(converted_now)) + ':R>  ♡  ')
 
         except HttpError as error:
                 await self.bot.get_channel(channel_id).send(f'Error UwU')
