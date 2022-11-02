@@ -12,15 +12,17 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from prettytable import PrettyTable
 
+
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 
-class ScheduleCog(commands.Cog):
+class Schedule_loopCog(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
         self.bot=bot
+        self.schedule_loop.start()
           
-    #✿Adding new command ",,Update"✿
-    @commands.command()
-    async def update(self, ctx):
+    #✿Adding new loop✿
+    @tasks.loop(time=datetime.time(hour=22))
+    async def schedule_loop(self):
         #✿Linking to Google API✿
         creds = None
         if os.path.exists('token.json'):
@@ -85,6 +87,10 @@ class ScheduleCog(commands.Cog):
         except HttpError as error:
                 await self.bot.get_channel(channel_id).send(f'Error UwU')
 
+    @schedule_loop.before_loop
+    async def tasks_before_loop(self):
+        await self.bot.wait_until_ready()
+
 
 async def setup(bot: commands.Bot) -> None:
-    await bot.add_cog(ScheduleCog(bot))
+    await bot.add_cog(Schedule_loopCog(bot))

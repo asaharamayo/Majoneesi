@@ -2,7 +2,6 @@ from discord.ext import commands, tasks
 from discord import app_commands
 import asyncio
 import datetime
-from datetime import datetime
 from dateutil import tz
 from time import sleep
 
@@ -28,7 +27,7 @@ class ClockCog(commands.Cog):
           
         for x in timezones:
             y = tz.gettz(timezones[f'{x}'])
-            time = datetime.now(tz=(y))
+            time = datetime.datetime.now(tz=(y))
             await self.bot.get_channel(channelids[f'{x}']).edit(name = f' ♡ {time.strftime("%I:%M %p")} ♡ {x}')
             sleep(3)   
        
