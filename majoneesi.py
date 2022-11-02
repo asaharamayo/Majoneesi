@@ -2,6 +2,7 @@
 
 import os
 import discord
+from discord import app_commands
 from discord.ext import commands
 
 #✿---✿---✿---✿Configurations✿---✿---✿---✿
@@ -18,12 +19,13 @@ class Client(commands.Bot):
         intents.message_content = True
         intents.presences = True
         intents.members = True
-        super().__init__(command_prefix = prefix, intents=intents)
+        activity = discord.Game(name="osu! for 7 hours")
+        super().__init__(command_prefix = prefix, intents=intents, activity=activity)
     
     #✿loading in cogs✿
     async def setup_hook(self):
         await self.load_cogs(client=self, directory="./cogs")
-    
+            
     async def load_cogs(self, client, directory: str) -> None:
         os.chdir(directory)
         base=os.getcwd()
