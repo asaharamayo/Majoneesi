@@ -19,7 +19,7 @@ class Client(commands.Bot):
         intents.message_content = True
         intents.presences = True
         intents.members = True
-        activity = discord.Game(name="osu! for 7 hours")
+        activity = discord.Game(name="osu! for 7")
         super().__init__(command_prefix = prefix, intents=intents, activity=activity)
     
     #✿loading in cogs✿
