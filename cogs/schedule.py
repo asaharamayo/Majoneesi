@@ -71,7 +71,7 @@ class ScheduleCog(commands.Cog):
             x.align = "c"
             
         #✿Set up embed✿ 
-            embed = discord.Embed(title='Mayo',description='What mayo doing?',color=0xfedbff,timestamp=datetime.now())
+            embed = discord.Embed(title='Mayo',description='What mayo doing?',color=0xfedbff,timestamp=datetime.datetime.now())
             embed.set_image(url="https://files.yande.re/jpeg/0ff5f6d4f8afe0d0deddbf17c2b58aa6/yande.re%201033861%20cleavage%20halloween%20kano_hito%20pointy_ears%20thighhighs%20wings.jpg")
             embed.add_field(name='₊˚ ✧ ‿︵‿୨୧‿︵ ✧ List ✧ ︵‿୨୧‿︵‿ ✧ ₊˚',value=my_list, inline=False)
             embed.add_field(name='₊˚ ✧ ︵‿୨୧‿︵ ✧ Schedule ✧ ︵‿୨୧‿︵ ✧ ₊˚',value='```\n'+str(x)+'```')
