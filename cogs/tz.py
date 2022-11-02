@@ -5,7 +5,6 @@ import datetime
 from datetime import timedelta
 from dateutil import tz
 from time import sleep
-import pandas as pd
 
 class ClockCog(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
