@@ -36,11 +36,11 @@ class ClockCog(commands.Cog):
     async def tasks_before_loop(self):
         await self.bot.wait_until_ready()
         
-        a = int(datetime.datetime.min)
-        n = int(0)
+        a = int(datetime.datetime.min.strftime('%M'))
+        n = 0
         range_min = 15*n
         range_max = 15*(n+1)
-        while n <= 4:
+        while n < 4:
             if a > range_min and a < range_max:
                 min_to_next_q = range_max - a
             else:
