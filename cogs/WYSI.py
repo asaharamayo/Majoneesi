@@ -61,12 +61,12 @@ class WYSI_loop(commands.Cog):
         self.rand = choice(WYSI_loop.timezones)
         self.h = choice(WYSI_loop.hours)
         self.x = random.randrange(0,4)
-        await ctx.send(f'Ramdomized as {self.rand} ; {self.h} ; {self.x} ; {datetime.datetime.now()} ♡ ')
+        await ctx.send(f'Randomized as {self.rand} ; {self.h} ; {self.x} ; {datetime.datetime.now()} ♡ ')
     
     @commands.command(hidden=True)
     @commands.is_owner()
     async def nWYSI(self, ctx):
-        await ctx.send(f'Last ramdomized as {self.rand} ; {self.h} ; {self.x} ; {datetime.datetime.now()} ♡ ')
+        await ctx.send(f'Last randomized as {self.rand} ; {self.h} ; {self.x} ; {datetime.datetime.now()} ♡ ')
 
     @tasks.loop()
     async def ping_loop(self):
