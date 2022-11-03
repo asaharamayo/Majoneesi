@@ -9,15 +9,14 @@ class HiCog(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self,message: discord.Message, /) -> None:
-        pattern: re.Pattern[str] = re.compile(r"\b(?:im|i am|i\'m)\b\s(.*)")
+        pattern: re.Pattern[str] = re.compile(r"\b(?:im|i am|i\'m)\b\s(.*)", flags=re.I)
         a = message.content.casefold()
         dad = 'dad'
-        if match := pattern.search(a):
+        if match := pattern.search(message.content):
             if dad in a:
                 await message.channel.send(f'Hi daddy allowance <:die_you:1037445906729017365>', reference=message)
             else:
-                len_show = message.content[-len(match[1]):]
-                await message.channel.send(f"Hi {len_show} \N{SKULL}", reference=message)
+                await message.channel.send(f'Hi {match[1]} \N{SKULL}', reference=message)
         
 async def setup(bot: commands.Bot) -> None:
     await bot.add_cog(HiCog(bot))
