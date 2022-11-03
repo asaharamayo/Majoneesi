@@ -19,7 +19,7 @@ class HiCog(commands.Cog):
             if y in a and dad in a:
                 await message.channel.send('Hi daddy allowance <:die_you:1037445906729017365>', reference=message)
             elif y in a and dad not in a:
-                await message.channel.send('Hi ' + str(message.content.split(y) + ' \N{SKULL}'), reference=message)
+                await message.channel.send('Hi ' + str(message.content.split(y)[1]) + ' \N{SKULL}', reference=message)
                 break
         
 async def setup(bot: commands.Bot) -> None:
