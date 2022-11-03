@@ -14,7 +14,7 @@ class Admin(commands.Cog):
         except commands.ExtensionError as e:
             await ctx.send(f'{e.__class__.__name__}: {e} \N{SKULL}')
         else:
-            await ctx.send('\N{OK HAND SIGN}')
+            await ctx.message.add_reaction('\N{OK HAND SIGN}')
 
     @commands.command(hidden=True)
     @commands.is_owner()
@@ -25,7 +25,7 @@ class Admin(commands.Cog):
         except commands.ExtensionError as e:
             await ctx.send(f'{e.__class__.__name__}: {e} \N{SKULL}')
         else:
-            await ctx.send('\N{OK HAND SIGN}')
+            await ctx.message.add_reaction('\N{OK HAND SIGN}')
  
     async def reload_cogs(self, client, directory: str) -> None:
         os.chdir(directory)
@@ -38,7 +38,7 @@ class Admin(commands.Cog):
     @commands.is_owner()
     async def reload_all(self, ctx):
         await self.reload_cogs(client=self, directory="./")
-        await ctx.send('\N{OK HAND SIGN}') 
+        await ctx.message.add_reaction('\N{OK HAND SIGN}') 
        
 
 async def setup(bot: commands.Bot) -> None:
