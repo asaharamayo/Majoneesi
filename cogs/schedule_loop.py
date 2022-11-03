@@ -88,7 +88,7 @@ class Schedule_loopCog(commands.Cog):
         #✿Set up last update message✿
             converted_now = time.mktime(datetime.datetime.now().timetuple())
             update_message = await channel.fetch_message(update_message_id)
-            await update_message.edit(content=' ♡ Last auto-updated <t:' + str(int(converted_now)) + ':R>  ♡  ')
+            await update_message.edit(content=' ♡ Last auto-updated <t:' + str(int(converted_now)) + ':R> ♡  ')
 
         except HttpError as error:
                 await self.bot.get_channel(channel_id).send(f'Error UwU')
