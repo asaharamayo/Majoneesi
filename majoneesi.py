@@ -9,6 +9,7 @@ from discord.ext import commands
 
 prefix = ',,'
 token = 'MTAzNjI4NTE0NzAwMTE0NzQzMw.GGsRKO.ygEpEpzydUMTWgrY0m8Q3eY8ljMwHG6PJsYYdI'
+owner_id = 231906328954535948
 
 #✿---✿---✿---✿Codes✿---✿---✿---✿
 
@@ -20,11 +21,13 @@ class Client(commands.Bot):
         intents.presences = True
         intents.members = True
         activity = discord.Game(name="osu! for 7 hours")
-        super().__init__(command_prefix = prefix, intents=intents, activity=activity)
+        super().__init__(command_prefix = prefix, intents=intents, activity=activity, owner_id = owner_id)
     
     #✿loading in cogs✿
     async def setup_hook(self):
         await self.load_cogs(client=self, directory="./cogs")
+        pre_load = 'cogload'
+        await self.load_extension(f"{pre_load}")
             
     async def load_cogs(self, client, directory: str) -> None:
         os.chdir(directory)
