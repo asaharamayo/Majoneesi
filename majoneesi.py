@@ -13,7 +13,7 @@ owner_id = 231906328954535948
 
 #✿---✿---✿---✿Codes✿---✿---✿---✿
 
-class Client(commands.Bot):
+class Mayo(commands.Bot):
     def __init__ (self):
         intents = discord.Intents.default()
     #✿intents settings✿
@@ -41,5 +41,5 @@ class Client(commands.Bot):
         print(f' ♡ Logged in as {client.user} ♡ ')
         print('(´• ᴗ •`✿)')
 
-client=Client()
+client=Mayo()
 client.run(token)
