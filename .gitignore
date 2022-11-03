@@ -1,4 +1,5 @@
-cogs/__pycache__
+*/__pycache__
 cogs/credentials.json
 cogs/token.json
 cupboard
+__pycache__
