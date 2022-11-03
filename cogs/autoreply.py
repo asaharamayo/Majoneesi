@@ -25,7 +25,10 @@ class AutoCog(commands.Cog):
             else:
                 await message.channel.send(f'I love you too <@!{message.author.id}> ♡ ', reference=message)
         if '69' in message.content.casefold():
-            await message.add_reaction('\U0001f602')
+            if message.author.bot:
+                return
+            else: 
+                await message.add_reaction('\U0001f602')
         if 'hi dad' in message.content.casefold():
             if message.author.bot:
                 return
