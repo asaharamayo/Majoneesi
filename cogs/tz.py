@@ -35,8 +35,19 @@ class ClockCog(commands.Cog):
     @clock_loop.before_loop
     async def tasks_before_loop(self):
         await self.bot.wait_until_ready()
-        a = datetime.datetime.min + round((datetime.datetime.now()-datetime.datetime.min)/timedelta(minutes=15))*timedelta(minutes=15)
-        await utils.sleep_until(a)
+        
+        a = int(datetime.datetime.min)
+        n = int(0)
+        range_min = 15*n
+        range_max = 15*(n+1)
+        while n <= 4:
+            if a > range_min and a < range_max:
+                min_to_next_q = range_max - a
+            else:
+                n = n + 1
+            continue
+        
+        sleep(60*min_to_next_q)
 
 async def setup(bot: commands.Bot) -> None:
     await bot.add_cog(ClockCog(bot))
