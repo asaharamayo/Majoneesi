@@ -2,6 +2,7 @@
 
 import os
 import discord
+import logging
 from discord import app_commands
 from discord.ext import commands
 
@@ -10,6 +11,7 @@ from discord.ext import commands
 prefix = ',,'
 token = 'MTAzNjI4NTE0NzAwMTE0NzQzMw.GGsRKO.ygEpEpzydUMTWgrY0m8Q3eY8ljMwHG6PJsYYdI'
 owner_id = 231906328954535948
+handler = logging.FileHandler(filename = 'majoneesi.log', encoding = 'utf-8', mode='w')
 
 #✿---✿---✿---✿Codes✿---✿---✿---✿
 
@@ -20,6 +22,7 @@ class Mayo(commands.Bot):
         intents.message_content = True
         intents.presences = True
         intents.members = True
+        intents.reactions = True
         activity = discord.Game(name="osu! for 7 hours")
         super().__init__(command_prefix = prefix, intents=intents, activity=activity, owner_id = owner_id)
     
@@ -42,4 +45,4 @@ class Mayo(commands.Bot):
         print('(´• ᴗ •`✿)')
 
 client=Mayo()
-client.run(token)
+client.run(token, log_handler = None)
