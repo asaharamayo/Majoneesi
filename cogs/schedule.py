@@ -11,7 +11,6 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from prettytable import PrettyTable
-import random
 
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 
@@ -29,7 +28,6 @@ class ScheduleCog(commands.Cog):
         self.my_list_time_show = ''
         self.my_list_what = ''
         self.my_list = ''
-
 
     #✿Linking to Google API✿
     async def google(self, ctx):
@@ -82,10 +80,8 @@ class ScheduleCog(commands.Cog):
         self.my_list_what = ''
         self.my_list = ''
         await self.google(self)
-        list = os.listdir("./image_lib")
-        image_str = random.choice(list)
-        path = "./image_lib/" + image_str
-        file = discord.File(f'{path}', filename = "image.png")
+        image_lib = self.bot.get_cog('image_lib')
+        await image_lib.image_rand()
 
         #✿Set up embed✿ 
         embed = discord.Embed(title='Mayo',description='What mayo doing?',color=0xfedbff,timestamp=datetime.datetime.now())
@@ -97,7 +93,7 @@ class ScheduleCog(commands.Cog):
         #✿Set up embed edit in specific channel✿ 
         channel = self.bot.get_channel(ScheduleCog.channel_id)
         message = await channel.fetch_message(ScheduleCog.message_id)
-        await message.edit(attachments=[file],embed=embed)
+        await message.edit(attachments=[image_lib.file],embed=embed)
         await ctx.message.add_reaction('\U00002764')       
         
 
