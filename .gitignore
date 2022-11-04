@@ -4,5 +4,5 @@ cogs/token.json
 cupboard
 __pycache__
 cogs/image_lib
-a
+a.py
 majoneesi.log
