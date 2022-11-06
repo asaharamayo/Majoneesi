@@ -45,7 +45,7 @@ resp_excep_resp = 'allowance <:die_you:1037445906729017365>'
 #hi_emoji = '\U0001f480'
 #✿ ily reply 
 ily_trigger = true
-ily_resp = 'I love you too ♡ '
+ily_resp = 'I love you too'
 #69_emoji = '\U0001f602'
 69_trigger = true
 
