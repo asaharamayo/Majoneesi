@@ -75,8 +75,12 @@ class WYSI_loop(commands.Cog):
         year_now = datetime.datetime.now().year
         month_now = datetime.datetime.now().month
         day_now = datetime.datetime.now().day
-        rand_day = day_now + self.x
-        next_run_time = datetime.datetime(year=year_now, month=month_now, day=rand_day, hour=self.h, minute=27, tzinfo = tz.gettz(self.rand))
+        #rand_day = day_now + self.x
+        rand_day = day_now
+        o = 19
+        d = 'Europe/Helsinki'
+        #next_run_time = datetime.datetime(year=year_now, month=month_now, day=rand_day, hour=self.h, minute=27, tzinfo = tz.gettz(self.rand))
+        next_run_time = datetime.datetime(year=year_now, month=month_now, day=rand_day, hour=o, minute=27, tzinfo = tz.gettz(d))
         await utils.sleep_until(next_run_time)
         await self.random(self)
 

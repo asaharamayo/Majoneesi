@@ -12,29 +12,21 @@ class AutoCog(commands.Cog):
     async def on_message(self,message: discord.Message, /) -> None:
         pattern: re.Pattern[str] = re.compile(r"\b(?:im|i am|i\'m|I\’m)\b\s(.*)", flags=re.I)
         a = message.content.casefold()
-        dad = self.config["auto_resp"]["hi_excep_kw"]
-        if match := pattern.search(message.content) and self.config["auto_resp"]["hi_trigger"] ==True:
-            if dad in a:
-                await message.channel.send(self.config["auto_resp"]["hi_excep_resp"], reference=message)
-            else:
-                await message.channel.send(f'Hi {match[1]} \N{SKULL}', reference=message)
+        dad = self.bot.config["auto_resp"]["hi_excep_kw"]
+        if match := pattern.search(message.content):
+            if not message.author.bot and self.bot.config["auto_resp"]["hi_trigger"] == True:
+                if dad in a:
+                    await message.channel.send(self.bot.config["auto_resp"]["hi_excep_resp"], reference=message)
+                else:
+                    await message.channel.send(f'Hi {match[1]} \N{SKULL}', reference=message)
         ily: re.Pattern[str] = re.compile(r"\b(?:love|luv|ily)\b\s(.*)", flags=re.I)
         mayo = 'mayo'
-        if match := ily.search(message.content) and mayo in message.content.casefold() and not message.author.bot and self.config["auto_resp"]["ily_trigger"] ==True:
-            #if message.author.bot:
-            #    return
-            #else:
-            await message.channel.send(f'{self.config["auto_resp"]["ily_resp"]} <@!{message.author.id}>', reference=message)
-        if '69' in message.content.casefold() and not message.author.bot and self.config["auto_resp"]["69_trigger"] ==True:
-            #if message.author.bot:
-            #    return
-            #else: 
+        if xxx := ily.search(message.content) and mayo in message.content.casefold() and not message.author.bot and self.bot.config["auto_resp"]["ily_trigger"] ==True:
+            await message.channel.send(f'{self.bot.config["auto_resp"]["ily_resp"]} ♡ <@!{message.author.id}>', reference=message)
+        if '69' in message.content.casefold() and not message.author.bot and self.bot.config["auto_resp"]["69_trigger"] ==True:
             await message.add_reaction('\U0001f602')
-        if 'hi dad' in message.content.casefold()and not message.author.bot and self.config["auto_resp"]["hi_trigger"] ==True:
-            #if message.author.bot:
-            #    return
-            #else:
-            await message.channel.send(self.config["auto_resp"]["resp_excep_resp"], reference=message)
+        if 'hi dad' in message.content.casefold() and not message.author.bot and self.bot.config["auto_resp"]["hi_trigger"] ==True:
+            await message.channel.send(self.bot.config["auto_resp"]["resp_excep_resp"], reference=message)
         
             
 async def setup(bot: commands.Bot) -> None:

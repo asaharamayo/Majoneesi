@@ -9,9 +9,9 @@ from time import sleep
 class ClockCog(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
         self.bot=bot
-        self.clock_loop.change_interval(time = datetime.time(minute=self.bot.config["tzclock"][0]["interval"]))
         self.clock_loop.start()
-
+        self.clock_loop.change_interval(time = datetime.time(minute=self.bot.config["tzclock"][0]["interval"]))
+        
     @tasks.loop()
     async def clock_loop(self):
         j = ''
@@ -29,7 +29,7 @@ class ClockCog(commands.Cog):
             y = tz.gettz(timezones[t])
             time = datetime.datetime.now(tz=(y))
             for u in range (1,5):
-                if t == self.bot.config["tzclock"][1][str(u)]["tz"]:
+                if timezones[t] == self.bot.config["tzclock"][1][str(u)]["tz"]:
                     await self.bot.get_channel(channelids[(u-1)]).edit(name = f' ♡ {time.strftime("%I:%M %p")} ♡ {names[(u-1)]}')
                     sleep(3)
                 
@@ -37,7 +37,6 @@ class ClockCog(commands.Cog):
     @clock_loop.before_loop
     async def tasks_before_loop(self):
         await self.bot.wait_until_ready()
-        
         a = int(datetime.datetime.now().strftime('%M'))
         n = ""
         for n in range (0,4):
@@ -50,7 +49,6 @@ class ClockCog(commands.Cog):
             else:
                 n = (n + 1)
                 continue
-        
         await asyncio.sleep(60*min_to_next_q)
     
 
