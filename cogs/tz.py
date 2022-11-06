@@ -9,28 +9,30 @@ from time import sleep
 class ClockCog(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
         self.bot=bot
+        self.clock_loop.change_interval(time = datetime.time(minute=self.bot.config["tzclock"][0]["interval"]))
         self.clock_loop.start()
 
-    @tasks.loop(minutes=30)
+    @tasks.loop()
     async def clock_loop(self):
-        timezones = {
-        'Mayo': 'Asia/Hong_Kong',
-        'Yimi': 'Europe/Helsinki',
-        'Aki': 'America/New_York',
-        'Sora': 'America/Los_Angeles'
-        }
-        channelids = {
-        'Mayo': 1036329698600431657,
-        'Yimi': 1036331077586919615,
-        'Aki': 1036331099946762363,
-        'Sora': 1036331148453892196
-        }
+        j = ''
+        k = ''
+        l = ''
+        for y in range(1,5):
+            j += f'{self.bot.config["tzclock"][1][str(y)]["tz"]},'
+            k += f'{self.bot.config["tzclock"][1][str(y)]["tz_channelids"]},'
+            l += f'{self.bot.config["tzclock"][1][str(y)]["name"]},'
+        timezones = j[:-1].split(",")
+        channelids = k[:-1].split(",")
+        names = l[:-1].split(",")
           
-        for x in timezones:
-            y = tz.gettz(timezones[f'{x}'])
+        for t in range(0,4):
+            y = tz.gettz(timezones[t])
             time = datetime.datetime.now(tz=(y))
-            await self.bot.get_channel(channelids[f'{x}']).edit(name = f' ♡ {time.strftime("%I:%M %p")} ♡ {x}')
-            sleep(3)   
+            for u in range (1,5):
+                if t == self.bot.config["tzclock"][1][str(u)]["tz"]:
+                    await self.bot.get_channel(channelids[(u-1)]).edit(name = f' ♡ {time.strftime("%I:%M %p")} ♡ {names[(u-1)]}')
+                    sleep(3)
+                
        
     @clock_loop.before_loop
     async def tasks_before_loop(self):

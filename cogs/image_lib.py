@@ -7,26 +7,24 @@ import datetime
 from PIL import Image
 
 class image_lib(commands.Cog):
-    log_chid = 1031578258615042099
-    user_id = 231906328954535948
-
+    
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
-        self.file = discord.File(f'{"./image_lib/" + random.choice (os.listdir("./image_lib"))}', filename = "image.png")
+        self.file = discord.File(f'{self.bot.config["image_lib"]["path"]}/{random.choice (os.listdir(self.bot.config["image_lib"]["path"]))}', filename = "image.png")
         
     async def image_rand(self):
-        list = os.listdir("./image_lib")
+        list = os.listdir(self.bot.config["image_lib"]["path"])
         image_str = random.choice(list)
-        path = "./image_lib/" + image_str
+        path = f'{self.bot.config["image_lib"]["path"]}/' + image_str
         self.file = discord.File(f'{path}', filename = "image.png")
 
 
     @commands.Cog.listener()
     async def on_raw_reaction_add(self,payload):
-        if str(payload.emoji) == '\U0001fac0' and payload.user_id == image_lib.user_id:
-            message = await self.bot.get_channel(image_lib.channel_id).fetch_message(payload.message_id)
+        if str(payload.emoji) == '\U0001fac0' and payload.user_id == self.bot.config["user_id"]["owner"]:
+            message = await self.bot.get_channel(self.bot.config["channel_id"]["channel_id"]).fetch_message(payload.message_id)
             await message.attachments[0].save(f'A:\Python\Majoneesi\cogs\image_lib\{payload.message_id}.png')
-            await self.bot.get_channel(image_lib.log_chid).send('Image has been saved to Image_Lib')
+            await self.bot.get_channel(self.bot.config["channel_id"]["log"]).send('Image has been saved to Image_Lib')
 
 
 async def setup(bot: commands.Bot) -> None:

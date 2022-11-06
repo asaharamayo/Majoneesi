@@ -13,41 +13,32 @@ class WYSI_React(commands.Cog):
            
     @commands.command()
     async def WYSI(self, ctx):
-        await ctx.send('https://tenor.com/view/aireu-wysi-osu-727-cookiezi-gif-20763403')
+        if self.bot.config["WYSI"]["command_trigger"] == True:
+            await ctx.send('https://tenor.com/view/aireu-wysi-osu-727-cookiezi-gif-20763403')
 
     @commands.Cog.listener()
     async def on_message(self,message: discord.Message, /) -> None:
         wysi: re.Pattern[str] = re.compile(r"\b(?:WYSI|when you see it)\b", flags=re.I)
         ayo: re.Pattern = re.compile(r"7\D?2\D?7\D?")
         emoji = ('\U0001f1fc','\U0001f1fe','\U0001f1f8','\U0001f1ee','\U0001f446')
-        if match := wysi.search(message.content):
-            if message.author.bot:
-                return
-            else: 
+        if self.bot.config["WYSI"]["auto_reply"] == True:
+            if match := wysi.search(message.content) and not message.author.bot:
                 for j in emoji:
-                    await message.add_reaction(j)  
-        elif match := ayo.search(message.content):
-            if message.author.bot:
-                return
-            else: 
+                        await message.add_reaction(j)  
+            elif match := ayo.search(message.content) and not message.author.bot:
                 for j in emoji:
                     await message.add_reaction(j)
 
-class WYSI_loop(commands.Cog):
-    timezones = ('Asia/Hong_Kong','Europe/Helsinki','America/New_York','America/Los_Angeles')
-    hours = 7, 19 
-    pairs = {
-        'Asia/Hong_Kong':'231906328954535948',
-        'Europe/Helsinki': '277850351841837066',
-        'America/New_York': '259747383699701760',
-        'America/Los_Angeles': '182293404435218432'
-        }   
-        
+class WYSI_loop(commands.Cog):       
     def __init__(self, bot: commands.Bot) -> None:
         self.bot=bot
-        self.ping_loop.start()
-        self.rand = choice(WYSI_loop.timezones)
-        self.h = choice(WYSI_loop.hours)
+        if self.bot.config["WYSI"]["loop"] == True:
+            self.ping_loop.start()
+        self.j = ''
+        for y in range(1,5):
+            self.j += f'{self.bot.config["tzclock"][1][str(y)]["tz"]},'
+        self.rand = choice(self.j[:-1].split(","))
+        self.h = choice((7,19))
         self.x = random.randrange(0,4)
 
     def cog_unload(self):
@@ -58,15 +49,17 @@ class WYSI_loop(commands.Cog):
     @commands.command(hidden=True)
     @commands.is_owner()
     async def random(self, ctx):
-        self.rand = choice(WYSI_loop.timezones)
-        self.h = choice(WYSI_loop.hours)
+        self.rand = choice(self.j[:-1].split(","))
+        self.h = choice((7,19))
         self.x = random.randrange(0,4)
-        await ctx.send(f'Randomized as {self.rand} ; {self.h} ; {self.x} ; {datetime.datetime.now()} ♡ ')
+        if self.bot.config["WYSI"]["loop"] == True:
+            await ctx.send(f'Randomized as {self.rand} ; {self.h} ; {self.x} ; {datetime.datetime.now()} ♡ ')
     
     @commands.command(hidden=True)
     @commands.is_owner()
     async def nWYSI(self, ctx):
-        await ctx.send(f'Last randomized as {self.rand} ; {self.h} ; {self.x} ; {datetime.datetime.now()} ♡ ')
+        if self.bot.config["WYSI"]["loop"] == True:
+            await ctx.send(f'Last randomized as {self.rand} ; {self.h} ; {self.x} ; {datetime.datetime.now()} ♡ ')
 
     @tasks.loop()
     async def ping_loop(self):
@@ -74,9 +67,11 @@ class WYSI_loop(commands.Cog):
             self.initial == False
             return
         else:
-            nuts = 1030582725851234404
+            nuts = self.bot.config["channel_id"]["general"]
             await self.bot.get_channel(nuts).send('https://tenor.com/view/aireu-wysi-osu-727-cookiezi-gif-20763403')
-            await self.bot.get_channel(nuts).send('<@' + str(self.pairs[self.rand]) +'>')
+            for z in range(1,5):
+                if self.bot.config["tzclock"][1][str(z)]["tz"] == self.rand:
+                    await self.bot.get_channel(nuts).send('<@' + self.bot.config["tzclock"][1][str(z)]["user_id"] +'>')
         year_now = datetime.datetime.now().year
         month_now = datetime.datetime.now().month
         day_now = datetime.datetime.now().day

@@ -12,16 +12,10 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from prettytable import PrettyTable
 
+
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 
 class ScheduleCog(commands.Cog):
-    #✿---✿---✿---✿---✿---✿---✿
-    #✿Configurations✿
-    channel_id = 1031608452084146207
-    unix_tz = 28800
-    message_id = 1037070041553850440
-    #✿---✿---✿---✿---✿---✿---✿
-
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
         self.x = []
@@ -47,23 +41,23 @@ class ScheduleCog(commands.Cog):
             service = build('calendar','v3',credentials=creds)
         
         #✿Fetching calendar info✿
-            now = datetime.datetime.now().isoformat() + 'Z'
+            now = datetime.datetime.utcnow().isoformat() + 'Z'
             events_results = service.events().list(calendarId='primary', timeMin=now, maxResults=100, singleEvents=True, orderBy='startTime').execute()
             events = events_results.get('items', [])
 
             if not events:
-                await self.bot.get_channel(ScheduleCog.channel_id).send(f'Nothing UwU')
+                await self.bot.get_channel(self.bot.config["channel_id"]["log"]).send(f'Nothing UwU')
                 return
 
         except HttpError as error:
-                await self.bot.get_channel(ScheduleCog.channel_id).send(f'Error UwU')
+                await self.bot.get_channel(self.bot.config["channel_id"]["log"]).send(f'Error UwU')
 
         #✿Set up compilation list✿ 
         for event in events:
             start = event['start'].get('dateTime', event['start'].get('date'))
             time_converted = time.mktime(dateutil.parser.isoparse(start).timetuple())
             time_converted_show = dateutil.parser.isoparse(start) + timedelta(hours=8)
-            self.my_list += ' ♡ <t:' + str(int(time_converted)+ScheduleCog.unix_tz) + ':R>  ♡  ' + str(event['summary']) + os.linesep
+            self.my_list += ' ♡ <t:' + str(int(time_converted)+self.bot.config["schedule"]["unix_tz"]) + ':R>  ♡  ' + str(event['summary']) + os.linesep
             self.my_list_time_show += str(time_converted_show.strftime("%d %b"))+" ♡ "+str(time_converted_show.strftime("%I:%M %p")) +','
             self.my_list_what += str(event['summary']) +','
         
@@ -91,9 +85,9 @@ class ScheduleCog(commands.Cog):
         embed.set_footer(text='(´• ᴗ •`✿)')
 
         #✿Set up embed edit in specific channel✿ 
-        channel = self.bot.get_channel(ScheduleCog.channel_id)
-        message = await channel.fetch_message(ScheduleCog.message_id)
-        await message.edit(attachments=[image_lib.file],embed=embed)
+        channel = self.bot.get_channel(self.bot.config["schedule"]["channel_id"])
+        message = await channel.fetch_message(self.bot.config["schedule"]["schedule_msg"])
+        await message.edit(attachments=[image_lib.file], embed=embed)
         await ctx.message.add_reaction('\U00002764')       
         
 
