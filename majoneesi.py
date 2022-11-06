@@ -5,17 +5,14 @@ import discord
 import logging
 from discord import app_commands
 from discord.ext import commands
+import tomli
 
-#✿---✿---✿---✿Configurations✿---✿---✿---✿
-
-prefix = ',,'
-token = 'MTAzNjI4NTE0NzAwMTE0NzQzMw.GGsRKO.ygEpEpzydUMTWgrY0m8Q3eY8ljMwHG6PJsYYdI'
-owner_id = 231906328954535948
 handler = logging.FileHandler(filename = 'majoneesi.log', encoding = 'utf-8', mode='w')
 
 #✿---✿---✿---✿Codes✿---✿---✿---✿
 
 class Mayo(commands.Bot):
+    config = {}
     def __init__ (self):
         intents = discord.Intents.default()
     #✿intents settings✿
@@ -23,9 +20,10 @@ class Mayo(commands.Bot):
         intents.presences = True
         intents.members = True
         intents.reactions = True
-        activity = discord.Game(name="osu! for 7 hours")
-        super().__init__(command_prefix = prefix, intents=intents, activity=activity, owner_id = owner_id)
-    
+        Mayo.config = tomli.loads(open("A:\Python\Majoneesi\config.toml").read())
+        activity = discord.Game(name= Mayo.config["main"]["activity"])
+        super().__init__(command_prefix = Mayo.config["main"]["prefix"], intents=intents, activity=activity, owner_id = Mayo.config["user_id"]["owner"])
+ 
     #✿loading in cogs✿
     async def setup_hook(self):
         await self.load_cogs(client=self, directory="./cogs")
@@ -36,7 +34,7 @@ class Mayo(commands.Bot):
         os.chdir(directory)
         base=os.getcwd()
         for x in os.listdir():
-            if x.endswith('.py'):
+            if x.endswith('.py') and self.config["cogs_load"][str(x)] == True:
                 await self.load_extension(f"cogs.{x[:-3]}")
     
     #✿on ready message
@@ -45,4 +43,5 @@ class Mayo(commands.Bot):
         print('(´• ᴗ •`✿)')
 
 client=Mayo()
-client.run(token, log_handler = None)
+
+client.run(client.config["main"]["token"], log_handler = None)

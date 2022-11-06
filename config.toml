@@ -1,0 +1,96 @@
+#✯¸.•´*¨`*•✿ ✿•*`¨*`•.¸✯
+
+#✿ Main configurations✿
+
+[main]
+prefix=',,'
+activity = 'by mayo'
+token = 'MTAzNjI4NTE0NzAwMTE0NzQzMw.GGsRKO.ygEpEpzydUMTWgrY0m8Q3eY8ljMwHG6PJsYYdI'
+
+#✿ Owner/admin id✿
+[user_id]
+owner = 231906328954535948
+
+#✿ Main channel and log channel set up✿
+[channel_id]
+log = 1031578258615042099
+general = 1030582725851234404
+
+
+#✯¸.•´*¨`*•✿ ✿•*`¨*`•.¸✯
+
+#✿ Main Features Triggers✿
+
+[cogs_load]
+'schedule.py' = true
+'schedule_loop.py' = true
+'image_lib.py' = true
+'tz.py' = true
+'autoreply.py' = true
+'uwu.py' = true
+'WYSI.py' = true
+
+
+#✯¸.•´*¨`*•✿ ✿•*`¨*`•.¸✯
+
+#✿ Detail config for features✿
+
+#✿ Autoreply feature
+[auto_resp]
+#✿ 'hi' dad jokes
+hi_trigger = true
+hi_excep_kw  = 'dad'
+hi_excep_resp = 'Hi daddy allowance <:die_you:1037445906729017365> '
+resp_excep_resp = 'allowance <:die_you:1037445906729017365>'
+#hi_emoji = '\U0001f480'
+#✿ ily reply 
+ily_trigger = true
+ily_resp = 'I love you too ♡ '
+#69_emoji = '\U0001f602'
+69_trigger = true
+
+[image_lib]
+path = './image_lib'
+channel_id = 1031234999854305282
+
+[schedule]
+channel_id = 1031608452084146207
+schedule_msg = 1037070041553850440
+update_msg = 1037388486191349830
+schedule_auto_hr = 22
+unix_tz = 28800
+
+[[tzclock]]
+interval = 30
+[[tzclock]]
+    [tzclock.1]
+        name = 'Mayo'
+        tz = 'Asia/Hong_Kong'
+        user_id = '231906328954535948'
+        tz_channelids = 1036329698600431657
+    [tzclock.2]
+        name = 'Yimi'
+        tz = 'Europe/Helsinki'
+        user_id = '277850351841837066'
+        tz_channelids = 1036331077586919615
+    [tzclock.3]
+        name = 'Aki'
+        tz = 'America/New_York'
+        user_id = '259747383699701760'
+        tz_channelids = 1036331099946762363
+    [tzclock.4]
+        name = 'Sora'
+        tz = 'America/Los_Angeles'
+        user_id = '182293404435218432'
+        tz_channelids = 1036331148453892196
+
+[commands]
+uwu = 'Oopsie UwU'
+
+[WYSI]
+command_trigger = true
+auto_reply = true
+loop = true
+
+
+
