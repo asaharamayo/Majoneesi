@@ -33,8 +33,6 @@ class WYSI_React(commands.Cog):
 class WYSI_loop(commands.Cog):       
     def __init__(self, bot: commands.Bot) -> None:
         self.bot=bot
-        if self.bot.config["WYSI"]["loop"] == True:
-            self.ping_loop.start()
         self.j = ''
         for y in range(1,5):
             self.j += f'{self.bot.config["tzclock"][1][str(y)]["tz"]},'
@@ -42,6 +40,8 @@ class WYSI_loop(commands.Cog):
         self.h = choice((7,19))
         self.x = random.randrange(0,4)
         self.initial = True
+        if self.bot.config["WYSI"]["loop"] == True:
+            self.ping_loop.start()
 
     def cog_unload(self):
         self.ping_loop.stop()
@@ -49,9 +49,9 @@ class WYSI_loop(commands.Cog):
     @commands.command(hidden=True)
     @commands.is_owner()
     async def random(self, ctx):
-        self.rand = choice(self.j[:-1].split(","))
-        self.h = choice((7,19))
-        self.x = random.randrange(0,4)
+        self.rand = await choice(self.j[:-1].split(","))
+        self.h = await choice((7,19))
+        self.x = await random.randrange(0,4)
         if self.bot.config["WYSI"]["loop"] == True:
             await ctx.send(f'Randomized as {self.rand} ; {self.h} ; {self.x} ; {datetime.datetime.now()} ♡ ')
     
@@ -68,29 +68,26 @@ class WYSI_loop(commands.Cog):
 
     @tasks.loop()
     async def ping_loop(self):
+        year_now = datetime.datetime.now().year
+        month_now = datetime.datetime.now().month
+        day_now = datetime.datetime.now().day
         if self.initial == True: 
             self.initial = False
-            year_now = datetime.datetime.now().year
-            month_now = datetime.datetime.now().month
-            day_now = datetime.datetime.now().day
             rand_day = day_now + self.x
             next_run_time_1 = datetime.datetime(year=year_now, month=month_now, day=rand_day, hour=self.h, minute=27, tzinfo = tz.gettz(self.rand))
-            print(next_run_time_1)
+            print(f'1: {next_run_time_1}')
             await utils.sleep_until(next_run_time_1)
-        else:
+        elif self.initial == False:
             nuts = self.bot.config["channel_id"]["general"]
             await self.bot.get_channel(nuts).send('https://tenor.com/view/aireu-wysi-osu-727-cookiezi-gif-20763403')
             for z in range(1,5):
                 if self.bot.config["tzclock"][1][str(z)]["tz"] == self.rand:
                     await self.bot.get_channel(nuts).send('<@' + self.bot.config["tzclock"][1][str(z)]["user_id"] +'>')
                     break
-            year_now = datetime.datetime.now().year
-            month_now = datetime.datetime.now().month
-            day_now = datetime.datetime.now().day
+            await self.random_local()
             rand_day = day_now + self.x
             next_run_time = datetime.datetime(year=year_now, month=month_now, day=rand_day, hour=self.h, minute=27, tzinfo = tz.gettz(self.rand))
             print(next_run_time)
-            self.random_local()
             await utils.sleep_until(next_run_time)
             
 
