@@ -76,7 +76,7 @@ class WYSI_loop(commands.Cog):
             rand_day = day_now + self.x
             next_run_time_1 = datetime.datetime(year=year_now, month=month_now, day=rand_day, hour=self.h, minute=27, tzinfo = tz.gettz(self.rand))
             await self.bot.get_channel(self.bot.config["channel_id"]["log"]).send(content = f'1: {next_run_time_1}')
-            await self.ping_loop.change_interval(time = next_run_time_1)
+            await utils.sleep_until(next_run_time_1)
             
         elif self.initial == False:
             nuts = self.bot.config["channel_id"]["log"]
@@ -87,9 +87,9 @@ class WYSI_loop(commands.Cog):
                     break
             await self.random_local()
             rand_day = day_now + self.x
-            next_run_time = datetime.datetime(year=year_now, month=month_now, day=rand_day, hour=self.h, minute=27, tzinfo = tz.gettz(self.rand))
+            next_run_time = datetime.datetime.time(year=year_now, month=month_now, day=rand_day, hour=self.h, minute=27, tzinfo = tz.gettz(self.rand))
             await self.bot.get_channel(self.bot.config["channel_id"]["log"]).send(content = f'{next_run_time}')
-            await self.ping_loop.change_interval(time = next_run_time)
+            await utils.sleep_until(next_run_time)
             
 
     @ping_loop.before_loop

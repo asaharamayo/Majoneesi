@@ -28,7 +28,7 @@ class Schedule_loopCog(commands.Cog):
         self.schedule_loop.start() 
 
     #✿Linking to Google API✿
-    async def google(self, ctx):
+    async def google(self):
         creds = None
         if os.path.exists('token.json'):
             creds = Credentials.from_authorized_user_file('token.json', SCOPES)
@@ -63,6 +63,7 @@ class Schedule_loopCog(commands.Cog):
             self.my_list += ' ♡ <t:' + str(int(time_converted)+self.bot.config["schedule"]["unix_tz"]) + ':R>  ♡  ' + str(event['summary']) + os.linesep
             self.my_list_time_show += str(time_converted_show.strftime("%d %b"))+" ♡ "+str(time_converted_show.strftime("%I:%M %p")) +','
             self.my_list_what += str(event['summary']) +','
+            print(self.my_list)
         
         #✿Set up table✿ 
         self.x = PrettyTable()
@@ -80,7 +81,7 @@ class Schedule_loopCog(commands.Cog):
             self.my_list_time_show = ''
             self.my_list_what = ''
             self.my_list = ''
-            await self.google(self)
+            await self.google()
             self.my_list_time_show_s = self.my_list_time_show
             self.my_list_what_s = self.my_list_what
             self.my_list_s = self.my_list
@@ -106,7 +107,7 @@ class Schedule_loopCog(commands.Cog):
             self.my_list_time_show = ''
             self.my_list_what = ''
             self.my_list = ''
-            await self.google(self)
+            await self.google()
             if self.my_list_s == self.my_list:
                 return
             elif self.my_list_s != self.my_list:
