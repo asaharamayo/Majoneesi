@@ -76,7 +76,8 @@ class WYSI_loop(commands.Cog):
             rand_day = day_now + self.x
             next_run_time_1 = datetime.datetime(year=year_now, month=month_now, day=rand_day, hour=self.h, minute=27, tzinfo = tz.gettz(self.rand))
             await self.bot.get_channel(self.bot.config["channel_id"]["log"]).send(content = f'1: {next_run_time_1}')
-            await self.ping_loop.change_interval(time = next_run_time_1)
+            await self.ping_loop.change_interval(time = next_run_time)
+            
         elif self.initial == False:
             nuts = self.bot.config["channel_id"]["log"]
             await self.bot.get_channel(nuts).send('https://tenor.com/view/aireu-wysi-osu-727-cookiezi-gif-20763403')
@@ -88,7 +89,7 @@ class WYSI_loop(commands.Cog):
             rand_day = day_now + self.x
             next_run_time = datetime.datetime(year=year_now, month=month_now, day=rand_day, hour=self.h, minute=27, tzinfo = tz.gettz(self.rand))
             await self.bot.get_channel(self.bot.config["channel_id"]["log"]).send(content = f'{next_run_time}')
-            await self.ping_loop.change_intervalchange_interval(time = next_run_time)
+            await self.ping_loop.change_interval(time = next_run_time)
             
 
     @ping_loop.before_loop
