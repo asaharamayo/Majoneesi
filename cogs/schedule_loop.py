@@ -25,8 +25,8 @@ class Schedule_loopCog(commands.Cog):
         self.my_list_time_show_s = ''
         self.my_list_what_s = ''
         self.my_list_s = ''
-        self.schedule_loop.start() 
-
+        self.schedule_loop.start()
+    
     #✿Linking to Google API✿
     async def google(self):
         creds = None
@@ -70,7 +70,7 @@ class Schedule_loopCog(commands.Cog):
         self.x.add_column(" ♡ When ♡ ", self.my_list_time_show.split(","))
         self.x.add_column(" ♡ What ♡ ", self.my_list_what.split(","))
         self.x.align = "c"
-
+        
     #✿Adding new loop✿
     @tasks.loop(minutes = 15)
     async def schedule_loop(self):
