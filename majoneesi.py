@@ -21,8 +21,8 @@ class Mayo(commands.Bot):
         intents.members = True
         intents.reactions = True
         self.config = tomli.loads(open("./config.toml").read())
-        activity = discord.Game(name= Mayo.config["main"]["activity"])
-        super().__init__(command_prefix = Mayo.config["main"]["prefix"], intents=intents, activity=activity, owner_id = Mayo.config["user_id"]["owner"])
+        activity = discord.Game(name= self.config["main"]["activity"])
+        super().__init__(command_prefix = self.config["main"]["prefix"], intents=intents, activity=activity, owner_id = self.config["user_id"]["owner"])
  
     #✿loading in cogs✿
     async def setup_hook(self):
