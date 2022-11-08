@@ -15,9 +15,9 @@ class SongCog(commands.Cog):
         if ctx.author.voice is not None:
             await ctx.author.voice.channel.connect()
             source = discord.FFmpegPCMAudio('[Mayo] Glow.mp3')
-            ctx.voice_client.play(source, after=lambda e: print('Player error') if e else None)
+            ctx.voice_client.play(source, after=ctx.author.voice.channel.disconnect())
             print('Playing!')
-            await ctx.author.voice.channel.disconnect()
+            await ctx.voice_client.disconnect()
 
 
 async def setup(bot: commands.Bot) -> None:
