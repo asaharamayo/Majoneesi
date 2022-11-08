@@ -21,7 +21,11 @@ class Schedule_loopCog(commands.Cog):
         self.my_list_time_show = ''
         self.my_list_what = ''
         self.my_list = ''
-        self.schedule_loop.change_interval(time = datetime.time(hour=self.bot.config["schedule"]["schedule_auto_hr"]))
+        self.initial = True
+        self.my_list_time_show_s = ''
+        self.my_list_what_s = ''
+        self.my_list_s = ''
+        #self.schedule_loop.change_interval(time = datetime.time(hour=self.bot.config["schedule"]["schedule_auto_hr"]) or datetime.time(hour=self.bot.config["schedule"]["schedule_auto_hr_2"]))
         self.schedule_loop.start() 
 
     #✿Linking to Google API✿
@@ -68,35 +72,77 @@ class Schedule_loopCog(commands.Cog):
         self.x.align = "c"
 
     #✿Adding new loop✿
-    @tasks.loop()
+    @tasks.loop(minutes = 15)
     async def schedule_loop(self):
-        self.my_list_time_show = ''
-        self.my_list_what = ''
-        self.my_list = ''
-        await self.google(self)
-        image_lib = self.bot.get_cog('image_lib')
-        await image_lib.image_rand()
-
-        #✿Set up embed✿ 
-        embed = discord.Embed(title='Mayo',description='What mayo doing?',color=0xfedbff,timestamp=datetime.datetime.now())
-        embed.set_image(url="attachment://image.png")
-        embed.add_field(name='₊˚ ✧ ‿︵‿୨୧‿︵ ✧ List ✧ ︵‿୨୧‿︵‿ ✧ ₊˚',value=self.my_list, inline=False)
-        embed.add_field(name='₊˚ ✧ ︵‿୨୧‿︵ ✧ Schedule ✧ ︵‿୨୧‿︵ ✧ ₊˚',value='```\n'+str(self.x)+'```')
-        embed.set_footer(text='(´• ᴗ •`✿)')
+        if self.initial == True:
+            image_lib = self.bot.get_cog('image_lib')
+            await image_lib.image_rand()
+            self.initial = False
+            self.my_list_time_show = ''
+            self.my_list_what = ''
+            self.my_list = ''
+            await self.google(self)
+            self.my_list_time_show_s = self.my_list_time_show
+            self.my_list_what_s = self.my_list_what
+            self.my_list_s = self.my_list
             
-        #✿Set up embed edit in specific channel✿ 
-        channel = self.bot.get_channel(self.bot.config["schedule"]["channel_id"])
-        message = await channel.fetch_message(self.bot.config["schedule"]["schedule_msg"])
-        await message.edit(attachments=[image_lib.file], embed=embed)
+            #✿Set up embed✿ 
+            embed = discord.Embed(title='Mayo',description='What mayo doing?',color=0xfedbff,timestamp=datetime.datetime.now())
+            embed.set_image(url="attachment://image.png")
+            embed.add_field(name='₊˚ ✧ ‿︵‿୨୧‿︵ ✧ List ✧ ︵‿୨୧‿︵‿ ✧ ₊˚',value=self.my_list, inline=False)
+            embed.add_field(name='₊˚ ✧ ︵‿୨୧‿︵ ✧ Schedule ✧ ︵‿୨୧‿︵ ✧ ₊˚',value='```\n'+str(self.x)+'```')
+            embed.set_footer(text='(´• ᴗ •`✿)')
+                
+            #✿Set up embed edit in specific channel✿ 
+            channel = self.bot.get_channel(self.bot.config["schedule"]["channel_id"])
+            message = await channel.fetch_message(self.bot.config["schedule"]["schedule_msg"])
+            await message.edit(attachments=[image_lib.file], embed=embed)
+            print ('Initial schedule updated automatically')
 
-        #✿Set up last update message✿
-        converted_now = time.mktime(datetime.datetime.now().timetuple())
-        update_message = await channel.fetch_message(self.bot.config["schedule"]["update_msg"])
-        await update_message.edit(content=' ♡ Last auto-updated <t:' + str(int(converted_now)) + ':R> ♡  ')
+            #✿Set up last update message✿
+            converted_now = time.mktime(datetime.datetime.now().timetuple())
+            update_message = await channel.fetch_message(self.bot.config["schedule"]["update_msg"])
+            await update_message.edit(content=' ♡ Last auto-updated <t:' + str(int(converted_now)) + ':R> ♡  ')
+
+        elif self.initial == False:
+            image_lib = self.bot.get_cog('image_lib')
+            await image_lib.image_rand()
+            self.my_list_time_show = ''
+            self.my_list_what = ''
+            self.my_list = ''
+            await self.google(self)
+            if self.my_list_s == self.my_list:
+                return
+            elif self.my_list_s != self.my_list:
+                #✿Set up embed✿ 
+                embed = discord.Embed(title='Mayo',description='What mayo doing?',color=0xfedbff,timestamp=datetime.datetime.now())
+                embed.set_image(url="attachment://image.png")
+                embed.add_field(name='₊˚ ✧ ‿︵‿୨୧‿︵ ✧ List ✧ ︵‿୨୧‿︵‿ ✧ ₊˚',value=self.my_list, inline=False)
+                embed.add_field(name='₊˚ ✧ ︵‿୨୧‿︵ ✧ Schedule ✧ ︵‿୨୧‿︵ ✧ ₊˚',value='```\n'+str(self.x)+'```')
+                embed.set_footer(text='(´• ᴗ •`✿)')
+                    
+                #✿Set up embed edit in specific channel✿ 
+                channel = self.bot.get_channel(self.bot.config["schedule"]["channel_id"])
+                message = await channel.fetch_message(self.bot.config["schedule"]["schedule_msg"])
+                await message.edit(attachments=[image_lib.file], embed=embed)
+                print ('Schedule updated automatically')
+
+                #✿Set up last update message✿
+                converted_now = time.mktime(datetime.datetime.now().timetuple())
+                update_message = await channel.fetch_message(self.bot.config["schedule"]["update_msg"])
+                await update_message.edit(content=' ♡ Last auto-updated <t:' + str(int(converted_now)) + ':R> ♡  ')
+
+                self.my_list_time_show_s = self.my_list_time_show
+                self.my_list_what_s = self.my_list_what
+                self.my_list_s = self.my_list
+        
 
     @schedule_loop.before_loop
     async def tasks_before_loop(self):
         await self.bot.wait_until_ready()
+
+    def cog_unload(self):
+        self.schedule_loop.stop()
 
 
 async def setup(bot: commands.Bot) -> None:

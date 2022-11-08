@@ -58,6 +58,7 @@ channel_id = 1031608452084146207
 schedule_msg = 1037070041553850440
 update_msg = 1037388486191349830
 schedule_auto_hr = 22
+schedule_auto_hr_2 = 15
 unix_tz = 28800
 
 [[tzclock]]
