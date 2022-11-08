@@ -49,7 +49,7 @@ ily_resp = 'I love you too'
 69_trigger = true
 
 [image_lib]
-path = '/cogs/image_lib'
+path = '/image_lib'
 channel_id = 1031234999854305282
 
 [schedule]
