@@ -75,6 +75,12 @@ class WYSI_loop(commands.Cog):
             self.initial = False
             rand_day = day_now + self.x
             next_run_time_1 = datetime.datetime(year=year_now, month=month_now, day=rand_day, hour=self.h, minute=27, tzinfo = tz.gettz(self.rand))
+            while next_run_time_1 < datetime.datetime.now(tz = tz.gettz(self.rand)):
+                await self.random_local()
+                rand_day = day_now + self.x
+                next_run_time_1 = datetime.datetime(year=year_now, month=month_now, day=rand_day, hour=self.h, minute=27, tzinfo = tz.gettz(self.rand))
+                if next_run_time_1 > datetime.datetime.now(tz = tz.gettz(self.rand)):
+                    break
             await self.bot.get_channel(self.bot.config["channel_id"]["log"]).send(content = f'1: {next_run_time_1}')
             await utils.sleep_until(next_run_time_1)
             
@@ -88,7 +94,13 @@ class WYSI_loop(commands.Cog):
             await self.random_local()
             rand_day = day_now + self.x
             next_run_time = datetime.datetime.time(year=year_now, month=month_now, day=rand_day, hour=self.h, minute=27, tzinfo = tz.gettz(self.rand))
-            await self.bot.get_channel(self.bot.config["channel_id"]["log"]).send(content = f'{next_run_time}')
+            while next_run_time < datetime.datetime.now(tz = tz.gettz(self.rand)):
+                await self.random_local()
+                rand_day = day_now + self.x
+                next_run_time = datetime.datetime(year=year_now, month=month_now, day=rand_day, hour=self.h, minute=27, tzinfo = tz.gettz(self.rand))
+                if next_run_time > datetime.datetime.now(tz = tz.gettz(self.rand)):
+                    break
+            await self.bot.get_channel(self.bot.config["channel_id"]["log"]).send(content = f'1: {next_run_time}')
             await utils.sleep_until(next_run_time)
             
 
