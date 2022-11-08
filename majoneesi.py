@@ -44,4 +44,4 @@ class Mayo(commands.Bot):
 
 client=Mayo()
 
-client.run(client.config["main"]["token"], log_handler = None)
+client.run(client.config["main"]["token"], log_handler = handler)

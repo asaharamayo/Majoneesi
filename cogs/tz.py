@@ -26,6 +26,7 @@ class ClockCog(commands.Cog):
         names = l[:-1].split(",")
         
         print('clock updating ♡ ')
+        await self.bot.get_channel(self.bot.config["channel_id"]["log"]).send(content = 'clock updating ♡ ')
 
         for t in range(0,4):
             y = tz.gettz(timezones[t])

@@ -22,7 +22,6 @@ general = 1030582725851234404
 #✿ Main Features Triggers✿
 
 [cogs_load]
-'schedule.py' = true
 'schedule_loop.py' = true
 'image_lib.py' = true
 'tz.py' = true
@@ -57,7 +56,6 @@ channel_id = 1031234999854305282
 channel_id = 1031608452084146207
 schedule_msg = 1037070041553850440
 update_msg = 1037388486191349830
-schedule_auto_hr = 22
 unix_tz = 28800
 
 [[tzclock]]

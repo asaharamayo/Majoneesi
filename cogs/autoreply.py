@@ -11,7 +11,7 @@ class AutoCog(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self,message: discord.Message, /) -> None:
         pattern: re.Pattern[str] = re.compile(r"\b(?:im|i am|i\'m|I\’m)\b\s(.*)", flags=re.I)
-        a = await message.content.casefold()
+        a = message.content.casefold()
         dad = self.bot.config["auto_resp"]["hi_excep_kw"]
         if match := pattern.search(message.content):
             if not message.author.bot and self.bot.config["auto_resp"]["hi_trigger"] == True:
