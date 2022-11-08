@@ -20,7 +20,7 @@ class Mayo(commands.Bot):
         intents.presences = True
         intents.members = True
         intents.reactions = True
-        Mayo.config = tomli.loads(open("A:\Python\Majoneesi\config.toml").read())
+        self.config = tomli.loads(open("./config.toml").read())
         activity = discord.Game(name= Mayo.config["main"]["activity"])
         super().__init__(command_prefix = Mayo.config["main"]["prefix"], intents=intents, activity=activity, owner_id = Mayo.config["user_id"]["owner"])
  
