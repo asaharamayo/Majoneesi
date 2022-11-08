@@ -23,7 +23,7 @@ class image_lib(commands.Cog):
     async def on_raw_reaction_add(self,payload):
         if str(payload.emoji) == '\U0001fac0' and payload.user_id == self.bot.config["user_id"]["owner"]:
             message = await self.bot.get_channel(self.bot.config["channel_id"]["channel_id"]).fetch_message(payload.message_id)
-            await message.attachments[0].save(f'.\cogs\image_lib\{payload.message_id}.png')
+            await message.attachments[0].save(f'./cogs/image_lib/{payload.message_id}.png')
             await self.bot.get_channel(self.bot.config["channel_id"]["log"]).send('Image has been saved to Image_Lib')
 
 
