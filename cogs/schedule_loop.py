@@ -63,7 +63,6 @@ class Schedule_loopCog(commands.Cog):
             self.my_list += ' ♡ <t:' + str(int(time_converted)+self.bot.config["schedule"]["unix_tz"]) + ':R>  ♡  ' + str(event['summary']) + os.linesep
             self.my_list_time_show += str(time_converted_show.strftime("%d %b"))+" ♡ "+str(time_converted_show.strftime("%I:%M %p")) +','
             self.my_list_what += str(event['summary']) +','
-            print(self.my_list)
         
         #✿Set up table✿ 
         self.x = PrettyTable()
