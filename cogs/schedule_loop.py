@@ -25,7 +25,6 @@ class Schedule_loopCog(commands.Cog):
         self.my_list_time_show_s = ''
         self.my_list_what_s = ''
         self.my_list_s = ''
-        #self.schedule_loop.change_interval(time = datetime.time(hour=self.bot.config["schedule"]["schedule_auto_hr"]) or datetime.time(hour=self.bot.config["schedule"]["schedule_auto_hr_2"]))
         self.schedule_loop.start() 
 
     #✿Linking to Google API✿
@@ -98,11 +97,8 @@ class Schedule_loopCog(commands.Cog):
             message = await channel.fetch_message(self.bot.config["schedule"]["schedule_msg"])
             await message.edit(attachments=[image_lib.file], embed=embed)
             print ('Initial schedule updated automatically')
-
-            #✿Set up last update message✿
-            converted_now = time.mktime(datetime.datetime.now().timetuple())
-            update_message = await channel.fetch_message(self.bot.config["schedule"]["update_msg"])
-            await update_message.edit(content=' ♡ Last auto-updated <t:' + str(int(converted_now)) + ':R> ♡  ')
+            #✿Set up last update message (log)✿
+            await self.bot.get_channel(self.bot.config["channel_id"]["log"]).send(content = 'Initial schedule updated automatically')
 
         elif self.initial == False:
             image_lib = self.bot.get_cog('image_lib')
@@ -126,11 +122,8 @@ class Schedule_loopCog(commands.Cog):
                 message = await channel.fetch_message(self.bot.config["schedule"]["schedule_msg"])
                 await message.edit(attachments=[image_lib.file], embed=embed)
                 print ('Schedule updated automatically')
-
-                #✿Set up last update message✿
-                converted_now = time.mktime(datetime.datetime.now().timetuple())
-                update_message = await channel.fetch_message(self.bot.config["schedule"]["update_msg"])
-                await update_message.edit(content=' ♡ Last auto-updated <t:' + str(int(converted_now)) + ':R> ♡  ')
+                #✿Set up last update message (log)✿
+                await self.bot.get_channel(self.bot.config["channel_id"]["log"]).send(content = 'Schedule updated automatically')
 
                 self.my_list_time_show_s = self.my_list_time_show
                 self.my_list_what_s = self.my_list_what
