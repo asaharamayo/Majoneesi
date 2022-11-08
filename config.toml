@@ -22,6 +22,7 @@ general = 1030582725851234404
 #✿ Main Features Triggers✿
 
 [cogs_load]
+'song.py' = true
 'a.py' = false
 'schedule_loop.py' = true
 'image_lib.py' = true
