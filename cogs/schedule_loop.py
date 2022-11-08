@@ -25,10 +25,10 @@ class Schedule_loopCog(commands.Cog):
         self.my_list_time_show_s = ''
         self.my_list_what_s = ''
         self.my_list_s = ''
-        self.schedule_loop.start() 
-
+        self.schedule_loop.start()
+    
     #✿Linking to Google API✿
-    async def google(self, ctx):
+    async def google(self):
         creds = None
         if os.path.exists('token.json'):
             creds = Credentials.from_authorized_user_file('token.json', SCOPES)
@@ -69,7 +69,7 @@ class Schedule_loopCog(commands.Cog):
         self.x.add_column(" ♡ When ♡ ", self.my_list_time_show.split(","))
         self.x.add_column(" ♡ What ♡ ", self.my_list_what.split(","))
         self.x.align = "c"
-
+        
     #✿Adding new loop✿
     @tasks.loop(minutes = 15)
     async def schedule_loop(self):
@@ -80,7 +80,7 @@ class Schedule_loopCog(commands.Cog):
             self.my_list_time_show = ''
             self.my_list_what = ''
             self.my_list = ''
-            await self.google(self)
+            await self.google()
             self.my_list_time_show_s = self.my_list_time_show
             self.my_list_what_s = self.my_list_what
             self.my_list_s = self.my_list
@@ -106,7 +106,7 @@ class Schedule_loopCog(commands.Cog):
             self.my_list_time_show = ''
             self.my_list_what = ''
             self.my_list = ''
-            await self.google(self)
+            await self.google()
             if self.my_list_s == self.my_list:
                 return
             elif self.my_list_s != self.my_list:
