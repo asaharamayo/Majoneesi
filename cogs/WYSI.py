@@ -85,7 +85,7 @@ class WYSI_loop(commands.Cog):
             await utils.sleep_until(next_run_time_1)
             
         elif self.initial == False:
-            nuts = self.bot.config["channel_id"]["log"]
+            nuts = self.bot.config["channel_id"]["general"]
             await self.bot.get_channel(nuts).send('https://tenor.com/view/aireu-wysi-osu-727-cookiezi-gif-20763403')
             for z in range(1,5):
                 if self.bot.config["tzclock"][1][str(z)]["tz"] == self.rand:
@@ -93,7 +93,7 @@ class WYSI_loop(commands.Cog):
                     break
             await self.random_local()
             rand_day = day_now + self.x
-            next_run_time = datetime.datetime.time(year=year_now, month=month_now, day=rand_day, hour=self.h, minute=27, tzinfo = tz.gettz(self.rand))
+            next_run_time = datetime.datetime(year=year_now, month=month_now, day=rand_day, hour=self.h, minute=27, tzinfo = tz.gettz(self.rand))
             while next_run_time < datetime.datetime.now(tz = tz.gettz(self.rand)):
                 await self.random_local()
                 rand_day = day_now + self.x
