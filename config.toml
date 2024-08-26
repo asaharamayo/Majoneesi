@@ -5,11 +5,11 @@
 [main]
 prefix=',,'
 activity = 'by mayo'
-token = 'MTAzNjI4NTE0NzAwMTE0NzQzMw.GGsRKO.ygEpEpzydUMTWgrY0m8Q3eY8ljMwHG6PJsYYdI'
+token = '**'
 
 #✿ Owner/admin id✿
 [user_id]
-owner = 231906328954535948
+owner = **
 
 #✿ Main channel and log channel set up✿
 [channel_id]
